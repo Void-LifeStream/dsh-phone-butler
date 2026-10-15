@@ -60,6 +60,19 @@ its address (e.g. over a VPN such as Tailscale) can connect with
 
 To find the wireless-debugging port: `adb mdns services` prints `IP:port` directly.
 
+**After the harness restarts, the connection is gone.** `adb connect` lives in the adb server,
+and that server dies with the harness — so a phone reachable a minute ago now reports "no
+device" even though nothing about the phone changed. The phone side still listens (its
+`adb tcpip 5555` survives a harness restart), so the fix is one command:
+
+```
+adb connect <phone-address>:5555      # then phone_status works again
+```
+
+If you want certainty first, a plain TCP probe settles it: `Test-NetConnection <address> -Port
+5555` succeeding means the phone is fine and only the client-side connection is missing.
+`phone_status` deliberately does not auto-connect — it has no business guessing an address.
+
 ## Five traps that produced wrong answers
 
 1. **`find /sdcard` silently returns nothing.** `/sdcard` is a symlink
