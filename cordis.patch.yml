@@ -1,0 +1,26 @@
+# ============================================================================
+# dsh-phone -- DSH bundle patch
+# ============================================================================
+# Mount declaration: DSH stacks each bundle's patch at startup, and this file
+# inserts dsh-phone into the profile's config tree.
+#
+# Install (official route, see the bundled cordis-plugin-development skill):
+#   plugin_manager  action: install_bundle  target: <absolute path to this dir>
+# It updates the profile's package.json and dsh.profile.bundles and runs pnpm.
+# Do NOT hand-edit the profile's package.json / cordis.patch.yml, and do not put
+# the package under $DSH_HOME -- both are explicitly discouraged by that skill.
+#
+# The bundled skill (phone-butler) is not declared here: lib/entry.js registers
+# it through a borrowed ctx.skills provider (soft dependency -- without a skills
+# service the five tools still work).
+#
+# Optional config (override in the profile's cordis.patch.yml):
+#   - id: dsh-phone
+#     config:
+#       adbPath: 'C:\platform-tools\adb.exe'
+#       timeoutMs: 240000
+# ============================================================================
+
+- insert:
+    - id: dsh-phone
+      name: dsh-phone

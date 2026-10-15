@@ -1,0 +1,35 @@
+{
+  "name": "dsh-phone",
+  "version": "0.1.0",
+  "description": "Treat a real Android phone as a device the agent can inspect and tidy up over adb: storage surveys, per-app data sizes, cache clearing, screenshots. No root required.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "android",
+    "adb",
+    "phone",
+    "storage",
+    "cleanup",
+    "screenshot",
+    "device-management"
+  ],
+  "type": "module",
+  "main": "lib/entry.js",
+  "files": [
+    "lib",
+    "skills",
+    "test",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test/selftest.mjs"
+  },
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
