@@ -1,5 +1,5 @@
 {
-  "name": "dsh-phone",
+  "name": "dsh-phone-butler",
   "version": "0.1.0",
   "description": "Treat a real Android phone as a device the agent can inspect and tidy up over adb: storage surveys, per-app data sizes, cache clearing, screenshots. No root required.",
   "keywords": [
