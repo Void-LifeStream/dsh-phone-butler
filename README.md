@@ -1,4 +1,4 @@
-# dsh-phone
+# dsh-phone-butler
 
 **把一台真实的 Android 手机，变成 agent 可以查看和打理的一台设备 —— 全部走 adb，不需要 root。**
 
@@ -46,7 +46,7 @@ plugin_manager  action: install_bundle  target: <本目录绝对路径>
 的常规位置。可选配置（在 profile 的 `cordis.patch.yml` 里覆盖）：
 
 ```yaml
-- id: dsh-phone
+- id: dsh-phone-butler
   config:
     adbPath: 'C:\platform-tools\adb.exe'
     timeoutMs: 240000
