@@ -101,6 +101,27 @@ plugin_manager  action: install_bundle  target: <本目录绝对路径>
    或查 `dumpsys power`。
 5. **别从截图里读路径。** OCR 会混淆 `l`/`1`、`I`/`1`。问设备：`pm path <包名>`。
 
+## 它不是什么（以及为什么不往那边走）
+
+有人会问：既然能看屏幕、能读传感器清单、能注入点击，为什么不把它做成「手机的感知器官」？
+
+我们认真评估过，**结论是不做**。理由放在这里，因为后来的人一定会再问一遍：
+
+| 想法 | 为什么不做 |
+|---|---|
+| 调相机「以固定采样率看世界」 | `adb shell` 没有 CAMERA 权限，唯一路径是截「相机在前台时的屏幕」—— 那不是采样，是**偷看屏幕**；而且无法验证这一帧真是相机画面，最坏会混进通知栏、私聊弹窗、验证码。 |
+| 读传感器数值 | Android 12+ 对 shell 主动遮蔽（`[value masked]`）。能拿到的是**清单**与**事件时间戳**，拿不到读数。 |
+| 失联自动求援 | adb 是「桌面端主动连手机」。**唯一需要它的时刻，它必然不在线。** |
+| 代做「需要本人承诺」的事 | 见下。 |
+
+**一条判据**（评估过所有候选之后，最好用的那一句）：
+
+> **操作结束后，用户还能不能说「这是我做的、我理解的」？**
+> **能就做，不能就别做。**
+
+完整的评估记录 —— 实测边界表、「假成功」七陷阱、L0~L3 分级授权模型、以及两个真正值得做的方向 ——
+在 [`docs/design-notes.md`](docs/design-notes.md)。
+
 ## 一条共存提醒
 
 如果同一台电脑上有多个 agent，它们**共用同一个 adb server**。`adb kill-server` 会把所有人
@@ -123,5 +144,5 @@ MIT © 2026 Void-LifeStream
 
 ---
 
-*Tested against a Xiaomi HyperOS device running Android 17 with an unrooted adb shell; the
-limits above were measured there rather than assumed.*
+*实测环境：REDMI K90 Pro Max（第五代骁龙 8 至尊版）/ Xiaomi HyperOS 4.0.2.0（Android 17）/ 无 root 的 adb shell。
+下面的每一条限制都是在这台机器上量出来的，不是推断 —— 换机型可能不同，尤其「注入是否被静默忽略」与「传感器数值是否被遮蔽」这两条。*
